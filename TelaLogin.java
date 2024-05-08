@@ -1,4 +1,7 @@
+package br.usjt.ticketgold;
 
+
+import java.sql.*;
 import javax.swing.JOptionPane;
 
 /*
@@ -8,10 +11,36 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 82411888
+ * @author Bruno Galvani Thezolin
+ * RA: 82411888
  */
 public class TelaLogin extends javax.swing.JFrame {
-
+       
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    public void logar(){
+        String sql = "select * from tb_pessoas where nome=? and senha=?";
+        try {
+            ConnectionFactory cf = new ConnectionFactory();
+            conexao = cf.obtemConexao();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, loginTextField.getText());
+            pst.setString(2, senhaPasswordField.getText());
+            
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                TelaPrincipal principal = new TelaPrincipal();
+                principal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     /**
      * Creates new form TelaLogin
      */
@@ -57,6 +86,11 @@ public class TelaLogin extends javax.swing.JFrame {
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
+            }
+        });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
             }
         });
 
@@ -119,13 +153,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        String login = loginTextField.getText();
-        String senha = new String(senhaPasswordField.getPassword());
-        if(login.equals("admin")&& senha.equals("admin"))
-            JOptionPane.showMessageDialog(null, "Bem vindo!");
-        else
-            JOptionPane.showMessageDialog(null, "Usuário Inválido");
+        logar();
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonKeyPressed
 
     /**
      * @param args the command line arguments
