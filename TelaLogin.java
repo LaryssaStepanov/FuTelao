@@ -31,9 +31,20 @@ public class TelaLogin extends javax.swing.JFrame {
             
             rs = pst.executeQuery();
             
+            String login = loginTextField.getText();
+            String senha = new String(senhaPasswordField.getPassword());
+            
             if(rs.next()){
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);
+                if(login.equals("admin")&& senha.equals("admin")){
+                    TelaAdmin admin = new TelaAdmin();
+                    admin.setVisible(true);
+                    dispose();
+                } else
+                if(login.equals("usuario")&& senha.equals("usuario")){
+                    TelaPrincipal principal = new TelaPrincipal();
+                    principal.setVisible(true);
+                    dispose();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)");
             }
@@ -67,7 +78,7 @@ public class TelaLogin extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         sairButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login - TicketGold");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
