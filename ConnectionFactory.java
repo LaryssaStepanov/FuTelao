@@ -18,7 +18,8 @@ public class ConnectionFactory {
     private String senha = "usjt";
     private String host = "localhost";
     private String porta = "3306";
-    private String bd = "db_pessoas";
+    private String bd = "db_ticketgold";
+    Connection c = null;
  
     public Connection obtemConexao (){
         try{
@@ -34,5 +35,7 @@ public class ConnectionFactory {
             return null;
         }
     }
-
+    public void desconectar(){
+        c = null;
+    }
 }

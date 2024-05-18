@@ -21,35 +21,44 @@ public class TelaLogin extends javax.swing.JFrame {
     ResultSet rs = null;
     
     public void logar(){
-        String sql = "select * from tb_pessoas where nome=? and senha=?";
-        try {
-            ConnectionFactory cf = new ConnectionFactory();
-            conexao = cf.obtemConexao();
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, loginTextField.getText());
-            pst.setString(2, senhaPasswordField.getText());
+        String sql = "select * from tb_pessoas where usuario=? and senha=?";
+        
+        String usuario = loginTextField.getText();
+        String senha = senhaPasswordField.getText();
+        String tipo = tipoComboBox.getSelectedItem().toString();
             
-            rs = pst.executeQuery();
+        if(usuario.equals("")||senha.equals("")||tipo.equals("Escolha")){
+            JOptionPane.showMessageDialog(null, "O campo 'Escolha' está vazio", "Erro", 1);
+        } else {
+             try {
+                ConnectionFactory cf = new ConnectionFactory();
+                conexao = cf.obtemConexao();
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, loginTextField.getText());
+                pst.setString(2, senhaPasswordField.getText());
             
-            String login = loginTextField.getText();
-            String senha = new String(senhaPasswordField.getPassword());
-            
-            if(rs.next()){
-                if(login.equals("admin")&& senha.equals("admin")){
-                    TelaAdmin admin = new TelaAdmin();
-                    admin.setVisible(true);
-                    dispose();
-                } else
-                if(login.equals("usuario")&& senha.equals("usuario")){
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    dispose();
+                rs = pst.executeQuery();
+                
+                if(rs.next()){
+                    String s1 = rs.getString("tipo");
+                    if(tipo.equalsIgnoreCase("Admin")&& s1.equalsIgnoreCase("Admin")){
+                        TelaAdmin ad =  new TelaAdmin(usuario);
+                        ad.setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "O usuário não corresponde com a Escolha");
+                    }
+                    if(tipo.equalsIgnoreCase("Comum")&& s1.equalsIgnoreCase("Comum")){
+                        TelaPrincipal pr =  new TelaPrincipal(usuario);
+                        pr.setVisible(true);
+                        this.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)", "Error", 1);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
         }
     }
     /**
@@ -77,20 +86,26 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
         sairButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        tipoComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login - TicketGold");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("TicketGold");
         jLabel1.setAlignmentY(0.0F);
 
+        senhaPasswordField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         senhaPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        loginTextField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         loginTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Digite seu Login");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Digite sua Senha");
 
         loginButton.setText("Entrar");
@@ -112,46 +127,63 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Digite sua Senha");
+
+        tipoComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha", "Admin", "Comum" }));
+        tipoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(jLabel1)
-                .addGap(168, 168, 168))
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(loginTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(senhaPasswordField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
-                .addGap(125, 125, 125))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loginTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(senhaPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jLabel4)
+                            .addComponent(tipoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addComponent(jLabel1)))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(loginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(senhaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(senhaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,6 +202,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonKeyPressed
+
+    private void tipoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipoComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,9 +246,11 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton loginButton;
     private javax.swing.JTextField loginTextField;
     private javax.swing.JButton sairButton;
     private javax.swing.JPasswordField senhaPasswordField;
+    private javax.swing.JComboBox<String> tipoComboBox;
     // End of variables declaration//GEN-END:variables
 }
