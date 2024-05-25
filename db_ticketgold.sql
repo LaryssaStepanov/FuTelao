@@ -26,3 +26,7 @@ CREATE TABLE tb_eventos(
 );
 
 SELECT * FROM tb_eventos;
+
+INSERT INTO tb_eventos (nome, dia, descricao) VALUES
+('Show de músicas', '27/05/2024', 'Show com músicas variadas'),
+('Copa do Brasil', '28/11/2022', 'Partida Brasil vs Coreia do Sul');
