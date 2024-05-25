@@ -45,13 +45,12 @@ public class TelaLogin extends javax.swing.JFrame {
                         TelaAdmin ad =  new TelaAdmin(usuario);
                         ad.setVisible(true);
                         this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "O usuário não corresponde com a Escolha");
-                    }
-                    if(tipo.equalsIgnoreCase("Comum")&& s1.equalsIgnoreCase("Comum")){
+                    } else if (tipo.equalsIgnoreCase("Comum")&& s1.equalsIgnoreCase("Comum")){
                         TelaPrincipal pr =  new TelaPrincipal(usuario);
                         pr.setVisible(true);
                         this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "O usuário não corresponde com a Escolha");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)", "Error", 1);

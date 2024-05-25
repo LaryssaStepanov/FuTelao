@@ -21,7 +21,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     
     ConnectionFactory cf = new ConnectionFactory();
         
-    public void cadastrar(){
+    public void cadastrarEvento(){
         String sql = "insert into tb_eventos (nome, dia, descricao) values (?, ?, ?)";
         
         try{
@@ -191,7 +191,7 @@ public class TelaAdmin extends javax.swing.JFrame {
 
     private void CadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarButtonActionPerformed
         // TODO add your handling code here:
-        cadastrar();
+        cadastrarEvento();
         
     }//GEN-LAST:event_CadastrarButtonActionPerformed
 
