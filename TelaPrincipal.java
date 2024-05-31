@@ -1,5 +1,8 @@
 package br.usjt.ticketgold;
 
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -19,9 +22,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     public TelaPrincipal(String usuario){
+        super("Eventos");
         initComponents();
         this.setLocationRelativeTo(null);
         usuarioLabel.setText(usuario);
+        buscarEventos();
+        eventoComboBox.addActionListener((e) -> preencherCampos());
+    }
+    
+    private void preencherCampos() {
+        Evento selecionado = (Evento)eventoComboBox.getSelectedItem();
+        nomeEventoLabel.setText(selecionado.getNome());
+        dataEventoLabel.setText(selecionado.getDia());
+        descricaoEventoLabel.setText(selecionado.getDescricao());
+    }
+    
+    
+    private void buscarEventos() {
+        try {
+            EventoDAO eventoDAO = new EventoDAO();
+            Evento[] eventos = eventoDAO.obterEventos();
+            eventoComboBox.setModel(new DefaultComboBoxModel(eventos));
+            preencherCampos();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -36,12 +61,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         usuarioLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        nomeLabel = new javax.swing.JLabel();
+        diaLabel = new javax.swing.JLabel();
+        descricaoLabel = new javax.swing.JLabel();
+        nomeEventoLabel = new javax.swing.JLabel();
+        dataEventoLabel = new javax.swing.JLabel();
+        descricaoEventoLabel = new javax.swing.JLabel();
+        eventoComboBox = new javax.swing.JComboBox<>();
+        voltarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Eventos - Ticket Gold");
+        setResizable(false);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Eventos - TicketGold");
+        jLabel2.setText("TicketGold");
 
         usuarioLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         usuarioLabel.setText("usuario");
@@ -49,20 +83,98 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Bem vindo,");
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        nomeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nomeLabel.setText("Nome:");
+
+        diaLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        diaLabel.setText("Data:");
+
+        descricaoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        descricaoLabel.setText("Descrição:");
+
+        nomeEventoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nomeEventoLabel.setText("nomedoevento");
+
+        dataEventoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        dataEventoLabel.setText("datadoevento");
+
+        descricaoEventoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        descricaoEventoLabel.setText("descriçãodoevento");
+        descricaoEventoLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(descricaoEventoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(descricaoLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(nomeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nomeEventoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(diaLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataEventoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomeLabel)
+                    .addComponent(nomeEventoLabel))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(diaLabel)
+                    .addComponent(dataEventoLabel))
+                .addGap(18, 18, 18)
+                .addComponent(descricaoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descricaoEventoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        eventoComboBox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eventoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha" }));
+
+        voltarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        voltarButton.setText("Voltar");
+        voltarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usuarioLabel)
-                        .addGap(39, 39, 39))
-                    .addComponent(jLabel2))
-                .addContainerGap(75, Short.MAX_VALUE))
+                        .addGap(119, 119, 119)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usuarioLabel))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(eventoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,11 +185,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usuarioLabel)
                     .addComponent(jLabel3))
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(eventoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void voltarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButtonActionPerformed
+        this.dispose();
+        TelaLogin login = new TelaLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_voltarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,8 +239,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel dataEventoLabel;
+    private javax.swing.JLabel descricaoEventoLabel;
+    private javax.swing.JLabel descricaoLabel;
+    private javax.swing.JLabel diaLabel;
+    private javax.swing.JComboBox<String> eventoComboBox;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel nomeEventoLabel;
+    private javax.swing.JLabel nomeLabel;
     private javax.swing.JLabel usuarioLabel;
+    private javax.swing.JButton voltarButton;
     // End of variables declaration//GEN-END:variables
 }

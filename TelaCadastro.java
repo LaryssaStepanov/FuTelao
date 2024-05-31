@@ -57,6 +57,7 @@ public class TelaCadastro extends javax.swing.JFrame {
      * Creates new form TelaCadastro
      */
     public TelaCadastro() {
+        super("Cadastro");
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -86,10 +87,18 @@ public class TelaCadastro extends javax.swing.JFrame {
         passarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cadastro - TicketGold");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("TicketGold");
+
+        usuarioTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        telefoneTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        emailTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        cpfTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Usuário");
@@ -106,6 +115,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Email");
 
+        cadastrarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cadastrarButton.setText("Cadastrar");
         cadastrarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +123,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        sairButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         sairButton.setText("Sair");
         sairButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +131,9 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        senhaPasswordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        passarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         passarButton.setText("Já é cadastrado?");
         passarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,17 +175,15 @@ public class TelaCadastro extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addComponent(cpfTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(77, 77, 77))))))
+                                    .addComponent(jLabel5)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75)
                         .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(227, 227, 227)
-                        .addComponent(passarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(232, 232, 232)
+                        .addComponent(passarButton)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

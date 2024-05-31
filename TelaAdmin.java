@@ -18,11 +18,13 @@ public class TelaAdmin extends javax.swing.JFrame {
     
     Connection conexao = null;
     PreparedStatement pst = null;
+    ResultSet rs = null;
     
     ConnectionFactory cf = new ConnectionFactory();
         
     public void cadastrarEvento(){
         String sql = "insert into tb_eventos (nome, dia, descricao) values (?, ?, ?)";
+        EventoDAO eventoDAO = new EventoDAO();
         
         try{
             conexao = cf.obtemConexao();
@@ -32,11 +34,15 @@ public class TelaAdmin extends javax.swing.JFrame {
             pst.setString(3, descricaoTextField.getText());
             
             pst.execute();
-            pst.close();
+            
             
             JOptionPane.showMessageDialog(null, "Evento Cadastrado com Sucesso");
             
-            cf.desconectar();
+            String nome = nomeTextField.getText();
+            String dia = diaTextField.getText();
+            String descricao = descricaoTextField.getText();
+            Evento evento = new Evento(nome, dia, descricao);
+
             
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar evento");
@@ -53,6 +59,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     }
     
     public TelaAdmin(String usuario){
+        super("Cadastre um Evento");
         initComponents();
         this.setLocationRelativeTo(null);
         adminLabel.setText(usuario);
@@ -80,12 +87,12 @@ public class TelaAdmin extends javax.swing.JFrame {
         nomeTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cadastro de Evento - Ticket Gold");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Cadastre um Evento");
+        jLabel1.setText("TicketGold");
 
+        CadastrarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CadastrarButton.setText("Cadastrar");
         CadastrarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +100,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
+        voltarButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         voltarButton.setText("Voltar");
         voltarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,15 +153,13 @@ public class TelaAdmin extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(CadastrarButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(167, 167, 167)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(adminLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(adminLabel))
+                            .addComponent(jLabel1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
