@@ -5,6 +5,7 @@ USE db_ticketgold;
 CREATE TABLE tb_pessoas(
 	codigo INT PRIMARY KEY AUTO_INCREMENT,
     usuario VARCHAR(200),
+    sexo VARCHAR(200),
     fone VARCHAR(200),
     email VARCHAR(200),
     cpf VARCHAR(11),
@@ -12,9 +13,9 @@ CREATE TABLE tb_pessoas(
     tipo VARCHAR(200)
 );
 
-INSERT INTO tb_pessoas (usuario, fone, email, cpf, senha, tipo) VALUES 
-('admin',  '11975341864', 'admin@gmail.com','48653279842','admin', 'Admin'),
-('comum', '11971685209', 'usuario@gmail.com','21358483423','comum', 'Comum');
+INSERT INTO tb_pessoas (usuario, sexo, fone, email, cpf, senha, tipo) VALUES 
+('admin', '', '', '','','admin', 'Admin'),
+('comum', '', '', '','','comum', 'Comum');
 
 SELECT * FROM tb_pessoas;
 
@@ -22,11 +23,12 @@ CREATE TABLE tb_eventos(
 	codigo INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(200),
     dia VARCHAR(200),
+    horario VARCHAR(200),
     descricao VARCHAR(200)
 );
 
-SELECT * FROM tb_eventos;
+INSERT INTO tb_eventos (nome, dia, horario, descricao) VALUES
+('Show de músicas', '27/05/2024', '19:00', 'Show com músicas variadas'),
+('Copa do Brasil', '28/11/2022', '16:00', 'Partida Brasil vs Coreia do Sul');
 
-INSERT INTO tb_eventos (nome, dia, descricao) VALUES
-('Show de músicas', '27/05/2024', 'Show com músicas variadas'),
-('Copa do Brasil', '28/11/2022', 'Partida Brasil vs Coreia do Sul');
+SELECT * FROM tb_eventos;
