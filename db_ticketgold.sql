@@ -8,7 +8,7 @@ CREATE TABLE tb_pessoas(
     sexo VARCHAR(200),
     fone VARCHAR(200),
     email VARCHAR(200),
-    cpf VARCHAR(11),
+    cpf VARCHAR(200),
     senha VARCHAR(200),
     tipo VARCHAR(200)
 );
