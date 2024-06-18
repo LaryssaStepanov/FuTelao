@@ -7,7 +7,6 @@ package br.usjt.ticketgold;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -19,13 +18,11 @@ public class TelaAdmin extends javax.swing.JFrame {
     
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
     
     ConnectionFactory cf = new ConnectionFactory();
         
     public void cadastrarEvento(){
         String sql = "insert into tb_eventos (nome, dia, horario, descricao) values (?, ?, ?, ?)";
-        EventoDAO eventoDAO = new EventoDAO();
         
         try{
             conexao = cf.obtemConexao();
@@ -34,10 +31,10 @@ public class TelaAdmin extends javax.swing.JFrame {
             pst.setString(2, diaTextField.getText());
             pst.setString(3, horaTextField.getText());
             pst.setString(4, descricaoTextField.getText());
-            
+
             pst.execute();
-            
-            
+
+
             JOptionPane.showMessageDialog(null, "Evento Cadastrado com Sucesso");
             
             String nome = nomeTextField.getText();
@@ -46,7 +43,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             String descricao = descricaoTextField.getText();
             Evento evento = new Evento(nome, dia, hora, descricao);
 
-            
+
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar evento");
             JOptionPane.showMessageDialog(null, e);
@@ -67,7 +64,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         adminLabel.setText(usuario);
         voltarButton.setBackground(new Color(255,255,255));
-        CadastrarButton.setBackground(new Color(255,255,255));
+        cadastrarButton.setBackground(new Color(255,255,255));
     }
 
     /**
@@ -84,7 +81,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         nomeTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         voltarButton = new javax.swing.JButton();
-        CadastrarButton = new javax.swing.JButton();
+        cadastrarButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         adminLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -130,22 +127,22 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
 
-        CadastrarButton.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        CadastrarButton.setText("Cadastrar");
-        CadastrarButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        CadastrarButton.setBorderPainted(false);
-        CadastrarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        CadastrarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        cadastrarButton.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        cadastrarButton.setText("Cadastrar");
+        cadastrarButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cadastrarButton.setBorderPainted(false);
+        cadastrarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cadastrarButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                CadastrarButtonMouseEntered(evt);
+                cadastrarButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                CadastrarButtonMouseExited(evt);
+                cadastrarButtonMouseExited(evt);
             }
         });
-        CadastrarButton.addActionListener(new java.awt.event.ActionListener() {
+        cadastrarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CadastrarButtonActionPerformed(evt);
+                cadastrarButtonActionPerformed(evt);
             }
         });
 
@@ -160,11 +157,6 @@ public class TelaAdmin extends javax.swing.JFrame {
 
         descricaoTextField.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         descricaoTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        descricaoTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descricaoTextFieldActionPerformed(evt);
-            }
-        });
 
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -193,7 +185,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        horaTextField.setText("  :  ");
         horaTextField.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
         diaTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -224,7 +215,7 @@ public class TelaAdmin extends javax.swing.JFrame {
                         .addGap(93, 93, 93)
                         .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
-                        .addComponent(CadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +266,7 @@ public class TelaAdmin extends javax.swing.JFrame {
                         .addComponent(horaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
         );
@@ -296,28 +287,24 @@ public class TelaAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarButtonActionPerformed
+    private void cadastrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarButtonActionPerformed
         String nome = nomeTextField.getText();
         String dia = diaTextField.getText();
         String hora = horaTextField.getText();
         String descricao = descricaoTextField.getText();
         
-        if(nome.equals("")||dia.equals("")||hora.equals("")||descricao.equals("")){
+        if(nome.equals("")||dia.equals("  /  /  ")||hora.equals("  :  ")||descricao.equals("")){
             JOptionPane.showMessageDialog(null, "Existem campos vazios, preencha-os", "Erro", 1);
         } else{
             cadastrarEvento();
         }      
-    }//GEN-LAST:event_CadastrarButtonActionPerformed
+    }//GEN-LAST:event_cadastrarButtonActionPerformed
 
     private void voltarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButtonActionPerformed
         this.dispose();
         TelaLogin login = new TelaLogin();
         login.setVisible(true);
     }//GEN-LAST:event_voltarButtonActionPerformed
-
-    private void descricaoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_descricaoTextFieldActionPerformed
 
     private void voltarButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseEntered
         voltarButton.setBackground(new Color(170, 170, 170));
@@ -327,13 +314,13 @@ public class TelaAdmin extends javax.swing.JFrame {
         voltarButton.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_voltarButtonMouseExited
 
-    private void CadastrarButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CadastrarButtonMouseEntered
-        CadastrarButton.setBackground(new Color(170, 170, 170));
-    }//GEN-LAST:event_CadastrarButtonMouseEntered
+    private void cadastrarButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonMouseEntered
+        cadastrarButton.setBackground(new Color(170, 170, 170));
+    }//GEN-LAST:event_cadastrarButtonMouseEntered
 
-    private void CadastrarButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CadastrarButtonMouseExited
-        CadastrarButton.setBackground(new Color(255,255,255));
-    }//GEN-LAST:event_CadastrarButtonMouseExited
+    private void cadastrarButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonMouseExited
+        cadastrarButton.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_cadastrarButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -371,8 +358,8 @@ public class TelaAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CadastrarButton;
     private javax.swing.JLabel adminLabel;
+    private javax.swing.JButton cadastrarButton;
     private javax.swing.JTextField descricaoTextField;
     private javax.swing.JFormattedTextField diaTextField;
     private javax.swing.JFormattedTextField horaTextField;

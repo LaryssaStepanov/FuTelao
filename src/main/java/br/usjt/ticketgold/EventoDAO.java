@@ -20,8 +20,8 @@ public class EventoDAO {
         String sql = "select * from tb_eventos;";
         try (Connection conn = cf.obtemConexao();
                 PreparedStatement ps = conn.prepareStatement(sql,
-                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                        ResultSet.TYPE_SCROLL_SENSITIVE, /*Se houver uma alteração direta no banco de dados enquanto o programa estiver rodando, a alteração aparecerá no programa*/
+                        ResultSet.CONCUR_READ_ONLY); /*Permite a leitura, mas não atualização pelo código*/
             ResultSet rs = ps.executeQuery();) {
                 int totalDeEventos = rs.last() ? rs.getRow(): 0;
                 Evento[] eventos = new Evento[totalDeEventos];

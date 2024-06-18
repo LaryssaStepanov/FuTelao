@@ -26,11 +26,8 @@ public class TelaLogin extends javax.swing.JFrame {
         
         String usuario = loginTextField.getText();
         String senha = senhaPasswordField.getText();
-        String tipo = tipoComboBox.getSelectedItem().toString();
             
-        if(tipo.equals("Escolha")){
-            JOptionPane.showMessageDialog(null, "O campo 'Escolha' está vazio", "Erro", 1);
-        } else if(usuario.equals("")&&senha.equals("")) {
+        if(usuario.equals("")&&senha.equals("")) {
             JOptionPane.showMessageDialog(null, "Existem campos vazios");
         } else if(usuario.equals("")||senha.equals("")){
             JOptionPane.showMessageDialog(null, "Existe um campo vazio");
@@ -39,18 +36,18 @@ public class TelaLogin extends javax.swing.JFrame {
                 ConnectionFactory cf = new ConnectionFactory();
                 conexao = cf.obtemConexao();
                 pst = conexao.prepareStatement(sql);
-                pst.setString(1, loginTextField.getText());
-                pst.setString(2, senhaPasswordField.getText());
+                pst.setString(1, usuario);
+                pst.setString(2, senha);
             
                 rs = pst.executeQuery();
                 
                 if(rs.next()){
                     String s1 = rs.getString("tipo");
-                    if(tipo.equalsIgnoreCase("Admin")&& s1.equalsIgnoreCase("Admin")){
+                    if(s1.equalsIgnoreCase("Admin")){
                         TelaAdmin ad =  new TelaAdmin(usuario);
                         ad.setVisible(true);
                         this.dispose();
-                    } else if (tipo.equalsIgnoreCase("Comum")&& s1.equalsIgnoreCase("Comum")){
+                    } else if (s1.equalsIgnoreCase("Comum")){
                         TelaPrincipal pr =  new TelaPrincipal(usuario);
                         pr.setVisible(true);
                         this.dispose();
@@ -60,7 +57,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido(s)", "Error", 1);
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -103,7 +100,6 @@ public class TelaLogin extends javax.swing.JFrame {
         sairButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
         cadastroButton = new javax.swing.JButton();
-        tipoComboBox = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -130,11 +126,6 @@ public class TelaLogin extends javax.swing.JFrame {
                 loginTextFieldFocusLost(evt);
             }
         });
-        loginTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginTextFieldActionPerformed(evt);
-            }
-        });
 
         senhaPasswordField.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         senhaPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -145,11 +136,6 @@ public class TelaLogin extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 senhaPasswordFieldFocusLost(evt);
-            }
-        });
-        senhaPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                senhaPasswordFieldActionPerformed(evt);
             }
         });
 
@@ -202,11 +188,6 @@ public class TelaLogin extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
-        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                loginButtonKeyPressed(evt);
-            }
-        });
 
         cadastroButton.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         cadastroButton.setText("<html><u>Cadastre-se</u>");
@@ -227,20 +208,6 @@ public class TelaLogin extends javax.swing.JFrame {
                 cadastroButtonActionPerformed(evt);
             }
         });
-        cadastroButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cadastroButtonKeyPressed(evt);
-            }
-        });
-
-        tipoComboBox.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        tipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha seu Usuário", "Admin", "Comum" }));
-        tipoComboBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tipoComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tipoComboBoxActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -256,9 +223,8 @@ public class TelaLogin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(loginTextField)
-                                        .addComponent(senhaPasswordField)
-                                        .addComponent(tipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(loginTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                        .addComponent(senhaPasswordField))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -283,13 +249,11 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
+                        .addGap(52, 52, 52)
                         .addComponent(loginTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(senhaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(52, 52, 52)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sairButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -338,28 +302,18 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairButtonActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_sairButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
         logar();
     }//GEN-LAST:event_loginButtonActionPerformed
-
-    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginButtonKeyPressed
 
     private void cadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroButtonActionPerformed
         this.dispose();
         TelaCadastro cadastro = new TelaCadastro();
         cadastro.setVisible(true);
     }//GEN-LAST:event_cadastroButtonActionPerformed
-
-    private void cadastroButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cadastroButtonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cadastroButtonKeyPressed
 
     private void loginTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginTextFieldFocusGained
         if(loginTextField.getText().equals("Usuário")){
@@ -389,14 +343,6 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_senhaPasswordFieldFocusLost
 
-    private void loginTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginTextFieldActionPerformed
-
-    private void senhaPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_senhaPasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_senhaPasswordFieldActionPerformed
-
     private void sairButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sairButtonMouseEntered
         sairButton.setBackground(new Color(170, 170, 170));
     }//GEN-LAST:event_sairButtonMouseEntered
@@ -420,10 +366,6 @@ public class TelaLogin extends javax.swing.JFrame {
     private void cadastroButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroButtonMouseExited
         cadastroButton.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_cadastroButtonMouseExited
-
-    private void tipoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tipoComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -475,6 +417,5 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JTextField loginTextField;
     private javax.swing.JButton sairButton;
     private javax.swing.JPasswordField senhaPasswordField;
-    private javax.swing.JComboBox<String> tipoComboBox;
     // End of variables declaration//GEN-END:variables
 }

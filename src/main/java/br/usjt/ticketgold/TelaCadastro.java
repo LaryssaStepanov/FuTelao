@@ -21,18 +21,10 @@ public class TelaCadastro extends javax.swing.JFrame {
     
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
+
     
     public void cadastrar(){
         String sql = "insert into tb_pessoas (usuario, sexo, fone, email, cpf, senha, tipo) values (?, ?, ?, ?, ?, ?, ?);";
-        
-        String usuario = usuarioTextField.getText();
-        String sexo = sexoComboBox.getSelectedItem().toString();
-        String senha = senhaPasswordField.getText();
-        String telefone = telefoneTextField.getText();
-        String cpf = cpfTextField.getText();
-        String email = emailTextField.getText();
-        
         
             try {
                 ConnectionFactory cf = new ConnectionFactory();
@@ -62,6 +54,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         super();
         initComponents();
         this.setLocationRelativeTo(null);
+        sexoComboBox.setBackground(new Color(255,255,255));
         sairButton.setBackground(new Color(255,255,255));
         cadastrarButton.setBackground(new Color(255,255,255));
     }
@@ -350,7 +343,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         String cpf = cpfTextField.getText();
         String email = emailTextField.getText();
         
-        if(usuario.equals("")||senha.equals("")||telefone.equals("")||cpf.equals("")||email.equals("")){
+        if(usuario.equals("")||senha.equals("")||sexo.equals("")||telefone.equals("(  )     -    ")||email.equals("")||cpf.equals("   .   .   -  ")){
             JOptionPane.showMessageDialog(null, "Existem campos vazios, preencha-os", "Erro", 1);
         } else {
             cadastrar();

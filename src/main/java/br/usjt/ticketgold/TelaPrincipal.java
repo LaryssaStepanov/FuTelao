@@ -3,6 +3,7 @@ package br.usjt.ticketgold;
 import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -27,16 +28,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         usuarioLabel.setText(usuario);
+        eventoComboBox.setBackground(new Color(255,255,255));
+        voltarButton.setBackground(new Color(255,255,255));
+        reservarButton.setBackground(new Color(255,255,255));
         buscarEventos();
         eventoComboBox.addActionListener((e) -> preencherCampos());
     }
     
     private void preencherCampos() {
         Evento selecionado = (Evento)eventoComboBox.getSelectedItem();
-        nomeEventoLabel.setText(selecionado.getNome());
-        dataEventoLabel.setText(selecionado.getDia());
-        horaEventoLabel.setText(selecionado.getHorario());
-        descricaoEventoLabel.setText(selecionado.getDescricao());
+        if(selecionado != null){
+            nomeEventoLabel.setText(selecionado.getNome());
+            dataEventoLabel.setText(selecionado.getDia());
+            horaEventoLabel.setText(selecionado.getHorario());
+            descricaoEventoLabel.setText(selecionado.getDescricao());
+        } else {
+            eventoComboBox.addItem("Nenhum Evento Existente");
+            nomeEventoLabel.setText("-");
+            dataEventoLabel.setText("-");
+            horaEventoLabel.setText("-");
+            descricaoEventoLabel.setText("-");
+        }
     }
     
     
@@ -78,6 +90,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        reservarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -100,7 +113,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         descricaoLabel.setText("Descrição:");
 
         nomeEventoLabel.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        nomeEventoLabel.setText("nomedoevento");
+        nomeEventoLabel.setText("Nenhum Evento");
 
         dataEventoLabel.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         dataEventoLabel.setText("datadoevento");
@@ -211,21 +224,46 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel4.setText("Veja os Eventos");
 
+        reservarButton.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        reservarButton.setText("Reservar");
+        reservarButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        reservarButton.setBorderPainted(false);
+        reservarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reservarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reservarButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reservarButtonMouseExited(evt);
+            }
+        });
+        reservarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usuarioLabel))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usuarioLabel))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(reservarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -241,7 +279,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(voltarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reservarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
@@ -274,6 +314,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void voltarButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseExited
         voltarButton.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_voltarButtonMouseExited
+
+    private void reservarButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservarButtonMouseEntered
+        reservarButton.setBackground(new Color(170, 170, 170));
+    }//GEN-LAST:event_reservarButtonMouseEntered
+
+    private void reservarButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservarButtonMouseExited
+        reservarButton.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_reservarButtonMouseExited
+
+    private void reservarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservarButtonActionPerformed
+        String evento = nomeEventoLabel.getText();
+        String usuario = usuarioLabel.getText();
+        
+        JOptionPane.showMessageDialog(null, "Ingresso - " + evento + " para " + usuario + " reservado com sucesso!");
+    }//GEN-LAST:event_reservarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,6 +382,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel nomeEventoLabel;
     private javax.swing.JLabel nomeLabel;
+    private javax.swing.JButton reservarButton;
     private javax.swing.JLabel usuarioLabel;
     private javax.swing.JButton voltarButton;
     // End of variables declaration//GEN-END:variables
