@@ -25,8 +25,8 @@ public class TelaCadastro extends javax.swing.JFrame {
     
     public void cadastrar(){
         String sql = "insert into tb_pessoas (usuario, sexo, fone, email, cpf, senha, tipo) values (?, ?, ?, ?, ?, ?, ?);";
-        
-            try {
+
+            try { 
                 ConnectionFactory cf = new ConnectionFactory();
                 conexao = cf.obtemConexao();
                 pst = conexao.prepareStatement(sql);

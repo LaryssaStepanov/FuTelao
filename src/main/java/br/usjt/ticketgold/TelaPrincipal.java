@@ -36,7 +36,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     private void preencherCampos() {
-        Evento selecionado = (Evento)eventoComboBox.getSelectedItem();
+        Evento selecionado = (Evento)eventoComboBox.getSelectedItem(); 
+        
         if(selecionado != null){
             nomeEventoLabel.setText(selecionado.getNome());
             dataEventoLabel.setText(selecionado.getDia());
@@ -53,7 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     
     private void buscarEventos() {
-        try {
+        try { /*código de tentativa*/
             EventoDAO eventoDAO = new EventoDAO();
             Evento[] eventos = eventoDAO.obterEventos();
             eventoComboBox.setModel(new DefaultComboBoxModel(eventos));

@@ -28,7 +28,7 @@ CREATE TABLE tb_eventos(
 );
 
 INSERT INTO tb_eventos (nome, dia, horario, descricao) VALUES
-('Cena 2k24', '27/05/2024', '19:00', 'Show de Trap'),
+('Cena 2k24', '16/12/2024', '18:00', 'Show de Trap'),
 ('Copa do Mundo', '28/06/2026', '16:00', 'Partida Brasil vs EUA');
 
 SELECT * FROM tb_eventos;

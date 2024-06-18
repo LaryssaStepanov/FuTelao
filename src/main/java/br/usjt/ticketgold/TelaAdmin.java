@@ -33,9 +33,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             pst.setString(4, descricaoTextField.getText());
 
             pst.execute();
-
-
-            JOptionPane.showMessageDialog(null, "Evento Cadastrado com Sucesso");
+            pst.close();
             
             String nome = nomeTextField.getText();
             String dia = diaTextField.getText();
@@ -297,6 +295,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Existem campos vazios, preencha-os", "Erro", 1);
         } else{
             cadastrarEvento();
+            JOptionPane.showMessageDialog(null, "Evento Cadastrado com Sucesso");
         }      
     }//GEN-LAST:event_cadastrarButtonActionPerformed
 
