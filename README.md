@@ -5,3 +5,5 @@ Integrantes: Laryssa Moreira Stepanov, Bruno Galvani Thezolin, Danilo de Araujo 
 O usuário "admin" com senha "admin" e o usuário "comum" com senha "comum" estão no script do banco de dados, não havendo criação de outros usuários administradores, mas sendo possível criar outros usuários comuns.
 
 Dois eventos estão por padrão no script do banco de dados, porém, é possível inserir novos eventos a partir da conta admin e consultar a lista de eventos a partir da conta comum (ou outra, se for criada).
+
+É necessário acessar a classe ConnectionFactory e alterar a senha do MySQL e inicializar o script em seu computador.
